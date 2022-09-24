@@ -1,0 +1,17 @@
+.cart-view {
+    position : absolute;
+    right    : 8%;
+    width    : 50%;
+    min-width: 250px;
+    z-index  : 1;
+}
+
+.cart-view .image-thumb img {
+    width     : 56px;
+    height    : 56px;
+    object-fit: fill;
+}
+
+.cart-view .cur-point {
+    cursor: pointer;
+}
