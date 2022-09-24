@@ -1,0 +1,21 @@
+.compare-view {
+    position : absolute;
+    right    : 25%;
+    width    : 50%;
+    min-width: 250px;
+    z-index  : 1;
+}
+
+.compare-view .image-thumb img {
+    width     : 56px;
+    height    : 56px;
+    object-fit: fill;
+}
+
+.compare-view .cur-point {
+    cursor: pointer;
+}
+
+.compare-view .checked {
+    color: darkgoldenrod;
+}
