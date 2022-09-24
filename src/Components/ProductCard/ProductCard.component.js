@@ -2,7 +2,7 @@ import React from 'react';
 import './ProductCard.styles.css';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, addCart }) {
     return (
         <Card className='product-card'>
             <img
@@ -22,7 +22,7 @@ export default function ProductCard({ product }) {
                 <CardText>
                     {product?.description ?? ''}
                 </CardText>
-                <Button>
+                <Button onClick={() => addCart(product)}>
                     Add to Cart
                 </Button>
             </CardBody>

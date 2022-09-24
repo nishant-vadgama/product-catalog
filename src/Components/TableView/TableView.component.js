@@ -3,7 +3,7 @@ import { Col, Row, Table, Button } from 'reactstrap';
 import './TableView.styles.css';
 
 
-export default function TableView({ products }) {
+export default function TableView({ products, addCart }) {
     return (
         <div className='table-view'>
             <Row>
@@ -47,7 +47,7 @@ export default function TableView({ products }) {
                                             {product?.description ?? ''}
                                         </td>
                                         <td className=''>
-                                            <Button>
+                                            <Button onClick={() => addCart(product)}>
                                                 Add to Cart
                                             </Button>
                                         </td>
