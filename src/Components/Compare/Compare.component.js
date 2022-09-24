@@ -9,7 +9,7 @@ function Rating({ rate }) {
         <>
             {rating.map((e, i) => {
                 return (
-                    <span class={"fa fa-star " + (e ? 'checked' : '')}></span>
+                    <span className={"fa fa-star " + (e ? 'checked' : '')}></span>
                 )
             })}
         </>
