@@ -1,0 +1,22 @@
+.table-view {
+    background   : white;
+    padding      : 10px;
+    border-radius: 10px;
+    font-size    : 16px;
+}
+
+.table-view .image-thumb img {
+    width     : 100px;
+    height    : 100px;
+    object-fit: fill;
+}
+
+.table-view .item-desc {
+    overflow             : hidden;
+    text-overflow        : ellipsis;
+    /* display           : -webkit-box; */
+    -webkit-line-clamp   : 2;
+    line-clamp           : 2;
+    -webkit-box-orient   : vertical;
+    max-width            : 300px;
+}
