@@ -9,14 +9,14 @@ function Rating({ rate }) {
         <>
             {rating.map((e, i) => {
                 return (
-                    <span className={"fa fa-star " + (e ? 'checked' : '')}></span>
+                    <span key={i} className={"fa fa-star " + (e ? 'checked' : '')}></span>
                 )
             })}
         </>
     )
 }
 
-export default function Compare({ compare, removeCompare }) {
+function Compare({ compare, removeCompare }) {
     const [showCart, toggleShowCart] = useState(false)
     return (
         <div>
@@ -102,3 +102,6 @@ export default function Compare({ compare, removeCompare }) {
         </div>
     )
 }
+
+
+export default React.memo(Compare);

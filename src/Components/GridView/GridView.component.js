@@ -3,7 +3,7 @@ import './GridView.styles.css';
 import { Row, Col } from 'reactstrap';
 import ProductCard from '../ProductCard/ProductCard.component';
 
-export default function GridView({ products, addCart, addCompare }) {
+function GridView({ products, addCart, addCompare }) {
     return (
         <div className='grid-view'>
             <Row>
@@ -18,3 +18,5 @@ export default function GridView({ products, addCart, addCompare }) {
         </div>
     )
 }
+
+export default React.memo(GridView);

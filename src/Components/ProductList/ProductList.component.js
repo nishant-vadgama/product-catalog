@@ -7,7 +7,7 @@ import CartBadge from '../Cart/CartBadge.component';
 import { NotificationManager } from 'react-notifications';
 import Compare from '../Compare/Compare.component';
 
-export default function ProductList({ products }) {
+function ProductList({ products }) {
     const [gridView, toggleGridView] = useState('grid')
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ?? []);
     const [compare, setCompare] = useState([]);
@@ -79,16 +79,17 @@ export default function ProductList({ products }) {
                 })
                 setCart([...newCart])
                 setTimeout(() => {
-                    NotificationManager.success('', `${product?.title ?? 'Product'} added to cart`);
+                    NotificationManager.success('', `${product?.title ?? 'Product'} removed from cart`);
                 }, 500);
             }
         }
     }
     useEffect(() => {
-        return (
+        return () => {
+            console.log('unmont')
             localStorage.setItem('cart', JSON.stringify(cart))
-        )
-    })
+        }
+    }, [])
     return (
         <div className='product-list'>
             <Row className='my-2 justify-content-between'>
@@ -115,3 +116,6 @@ export default function ProductList({ products }) {
         </div>
     )
 }
+
+
+export default React.memo(ProductList);

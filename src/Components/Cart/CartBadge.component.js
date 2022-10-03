@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './CartBadge.styles.css';
 import { Button, Badge, Toast, ToastHeader, ToastBody, Row, Col, Table } from 'reactstrap';
 
-export default function CartBadge({ cart, addCart, removeCart }) {
+function CartBadge({ cart, addCart, removeCart }) {
     const [showCart, toggleShowCart] = useState(false)
     let grandTotal = 0;
     return (
@@ -90,3 +90,6 @@ export default function CartBadge({ cart, addCart, removeCart }) {
         </div>
     )
 }
+
+
+export default React.memo(CartBadge);

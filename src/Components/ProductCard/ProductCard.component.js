@@ -2,7 +2,7 @@ import React from 'react';
 import './ProductCard.styles.css';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
 
-export default function ProductCard({ product, addCart, addCompare }) {
+function ProductCard({ product, addCart, addCompare }) {
     return (
         <Card className='product-card'>
             <img
@@ -32,3 +32,5 @@ export default function ProductCard({ product, addCart, addCompare }) {
         </Card>
     )
 }
+
+export default React.memo(ProductCard);
