@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './ProductList.styles.css'
-import GridView from '../GridView/GridView.component';
-import TableView from '../TableView/TableView.component';
+import GridView from './GridView.component';
+import TableView from './TableView.component';
 import { Col, Row, Button } from 'reactstrap';
-import CartBadge from '../Cart/CartBadge.component';
+import CartBadge from './CartBadge.component';
 import { NotificationManager } from 'react-notifications';
-import Compare from '../Compare/Compare.component';
+import Compare from './Compare.component';
 
 function ProductList({ products }) {
     const [gridView, toggleGridView] = useState('grid')
@@ -89,7 +88,7 @@ function ProductList({ products }) {
             console.log('unmont')
             localStorage.setItem('cart', JSON.stringify(cart))
         }
-    }, [])
+    }, [cart])
     return (
         <div className='product-list'>
             <Row className='my-2 justify-content-between'>

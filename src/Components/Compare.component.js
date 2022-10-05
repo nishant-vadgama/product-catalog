@@ -1,26 +1,38 @@
 import React, { useState } from 'react'
-import './CartBadge.styles.css';
 import { Button, Badge, Toast, ToastHeader, ToastBody, Row, Col, Table } from 'reactstrap';
 
-function CartBadge({ cart, addCart, removeCart }) {
+function Rating({ rate }) {
+    let rating = [0, 0, 0, 0, 0];
+    rating.fill(1, 0, rate);
+    return (
+        <>
+            {rating.map((e, i) => {
+                return (
+                    <span key={i} className={"fa fa-star " + (e ? 'checked' : '')}></span>
+                )
+            })}
+        </>
+    )
+}
+
+function Compare({ compare, removeCompare }) {
     const [showCart, toggleShowCart] = useState(false)
-    let grandTotal = 0;
     return (
         <div>
             <Button
                 color="info"
-                // outline
+                outline
                 onClick={() => toggleShowCart(!showCart)}
             >
-                <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                {' '}Cart{' '}
+                <i className="fa fa-superpowers" aria-hidden="true"></i>
+                {' '}Compare{' '}
                 <Badge color='danger' pill={true}>
-                    {cart.length}
+                    {compare.length}
                 </Badge>
             </Button>
-            <Toast isOpen={showCart} className='cart-view'>
+            {compare.length > 0 && <Toast isOpen={showCart} className='compare-view'>
                 <ToastHeader toggle={() => toggleShowCart(!showCart)}>
-                    Your Cart Items
+                    Your Compare Items
                 </ToastHeader>
                 <ToastBody>
                     <Row>
@@ -35,19 +47,22 @@ function CartBadge({ cart, addCart, removeCart }) {
                                             Item
                                         </th>
                                         <th>
-                                            Qty
+                                            Rating
                                         </th>
                                         <th>
                                             Price
                                         </th>
                                         <th>
-                                            Total
+                                            Brand
+                                        </th>
+                                        <th>
+
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {cart.map((product, index) => {
-                                        grandTotal = grandTotal + (product.price * product.cartQty);
+                                    {compare.map((product, index) => {
+                                        // grandTotal = grandTotal + (product.price * product.cartQty);
                                         return (
                                             <tr key={'table_' + index}>
                                                 <th scope="row" className='image-thumb'>
@@ -60,36 +75,32 @@ function CartBadge({ cart, addCart, removeCart }) {
                                                     {product?.title ?? ''}
                                                 </td>
                                                 <td>
-                                                    <i onClick={() => removeCart(product)} className="fa fa-minus-circle text-info fs-6 cur-point" aria-hidden="true"></i>
-                                                    {`  `}{product?.cartQty ?? 0}{`  `}
-                                                    <i onClick={() => addCart(product)} className="fa fa-plus-circle text-info fs-6 cur-point" aria-hidden="true"></i>
+                                                    <Rating rate={Math.ceil(product?.rating ?? 0)} />
                                                 </td>
                                                 <td className=''>
                                                     {product?.price.toFixed(2) ?? ''}
                                                 </td>
                                                 <td className=''>
-                                                    {(product.price * product.cartQty).toFixed(2) ?? ''}
+                                                    {product?.brand ?? ''}
+                                                </td>
+                                                <td className=''>
+                                                    <Button className='' size="sm" onClick={() => removeCompare(product?.id)}>
+                                                        Remove
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         )
                                     })}
-                                    <tr >
-                                        <th className='' colSpan={4}>
-                                            {`Grand Total : `}
-                                        </th>
-                                        <th className=''>
-                                            {grandTotal.toFixed(2)}
-                                        </th>
-                                    </tr>
+
                                 </tbody>
                             </Table>
                         </Col>
                     </Row>
                 </ToastBody>
-            </Toast>
+            </Toast>}
         </div>
     )
 }
 
 
-export default React.memo(CartBadge);
+export default React.memo(Compare);

@@ -1,5 +1,4 @@
 import React from 'react';
-import './ProductCard.styles.css';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
 
 function ProductCard({ product, addCart, addCompare }) {

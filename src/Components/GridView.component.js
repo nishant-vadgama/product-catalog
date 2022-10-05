@@ -1,7 +1,6 @@
 import React from 'react'
-import './GridView.styles.css';
 import { Row, Col } from 'reactstrap';
-import ProductCard from '../ProductCard/ProductCard.component';
+import ProductCard from './ProductCard.component';
 
 function GridView({ products, addCart, addCompare }) {
     return (
