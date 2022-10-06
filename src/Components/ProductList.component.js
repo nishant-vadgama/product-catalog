@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import GridView from './GridView.component';
 import TableView from './TableView.component';
 import { Col, Row, Button } from 'reactstrap';
-import CartBadge from './CartBadge.component';
 import { NotificationManager } from 'react-notifications';
-import Compare from './Compare.component';
+import CartBadge /* { MemoizedCartBadge } */ from './CartBadge.component';
+import Compare/* { MemoizedCompare } */ from './Compare.component';
 
 function ProductList({ products }) {
     const [gridView, toggleGridView] = useState('grid')
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ?? []);
     const [compare, setCompare] = useState([]);
     /* Add products to compare */
-    const addCompare = (product) => {
+    const addCompare = useCallback((product) => {
         if (compare.length < 3) {
             let alreadyExist = compare.find((p) => p.id === product.id);
             if (alreadyExist) {
@@ -25,16 +25,16 @@ function ProductList({ products }) {
         } else {
             NotificationManager.warning('', `Maximum 3 products can be compare at a time.`);
         }
-    }
+    }, [compare])
     /* Add products to compare */
-    const removeCompare = (id) => {
+    const removeCompare = useCallback((id) => {
         if (compare.length) {
             setCompare(compare.filter(p => p.id !== id))
         }
 
-    }
+    }, [compare])
     /* Add product to cart */
-    const addToCart = (product) => {
+    const addToCart = useCallback((product) => {
         let alreadyExist = cart.find((p) => p.id === product.id);
         if (alreadyExist) {
             if (alreadyExist.cartQty >= alreadyExist.limit) {
@@ -61,9 +61,9 @@ function ProductList({ products }) {
                 NotificationManager.success('', `${product?.title ?? 'Product'} added to cart`);
             }, 500);
         }
-    }
+    }, [cart])
     /* remove product from cart */
-    const removeFromCart = (product) => {
+    const removeFromCart = useCallback((product) => {
         let alreadyExist = cart.find((p) => p.id === product.id);
         if (alreadyExist) {
             if (alreadyExist.cartQty === 1) {
@@ -82,10 +82,12 @@ function ProductList({ products }) {
                 }, 500);
             }
         }
-    }
+    }, [cart])
+    const changeProductView = useCallback((view) => {
+        toggleGridView(view)
+    }, [])
     useEffect(() => {
         return () => {
-            console.log('unmont')
             localStorage.setItem('cart', JSON.stringify(cart))
         }
     }, [cart])
@@ -93,25 +95,23 @@ function ProductList({ products }) {
         <div className='product-list'>
             <Row className='my-2 justify-content-between'>
                 <Col sm={2}>
-                    <Button onClick={() => toggleGridView('grid')} color={gridView === 'grid' ? 'info' : 'secondary'}>
+                    <Button onClick={() => changeProductView('grid')} color={gridView === 'grid' ? 'info' : 'secondary'}>
                         <i className="fa fa-th-large" aria-hidden="true"></i>
                     </Button>
-                    <Button onClick={() => toggleGridView('table')} color={gridView === 'table' ? 'info' : 'secondary'}>
+                    <Button onClick={() => changeProductView('table')} color={gridView === 'table' ? 'info' : 'secondary'}>
                         <i className="fa fa-th-list" aria-hidden="true"></i>
                     </Button>
                 </Col>
                 <Col sm={2} className={'text-end'}>
-                    <Compare compare={compare} removeCompare={(id) => removeCompare(id)} />
+                    <Compare compare={compare} removeCompare={removeCompare} />
                 </Col>
                 <Col sm={2} className={'text-end'}>
-                    <CartBadge cart={cart} addCart={(p) => addToCart(p)} removeCart={(p) => removeFromCart(p)} />
+                    <CartBadge cart={cart} addCart={addToCart} removeCart={removeFromCart} />
                 </Col>
             </Row>
             {gridView === 'grid' ?
-                <GridView products={products} addCart={(p) => addToCart(p)} addCompare={(p) => addCompare(p)} />
-                : <TableView products={products} addCart={(p) => addToCart(p)} addCompare={(p) => addCompare(p)} />}
-
-
+                <GridView products={products} addCart={addToCart} addCompare={addCompare} />
+                : <TableView products={products} addCart={addToCart} addCompare={addCompare} />}
         </div>
     )
 }

@@ -14,7 +14,7 @@ function Rating({ rate }) {
         </>
     )
 }
-
+const MemoizeRating = React.memo(Rating);
 function Compare({ compare, removeCompare }) {
     const [showCart, toggleShowCart] = useState(false)
     return (
@@ -75,7 +75,7 @@ function Compare({ compare, removeCompare }) {
                                                     {product?.title ?? ''}
                                                 </td>
                                                 <td>
-                                                    <Rating rate={Math.ceil(product?.rating ?? 0)} />
+                                                    <MemoizeRating rate={Math.ceil(product?.rating ?? 0)} />
                                                 </td>
                                                 <td className=''>
                                                     {product?.price.toFixed(2) ?? ''}
