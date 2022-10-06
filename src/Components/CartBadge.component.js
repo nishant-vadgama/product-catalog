@@ -1,11 +1,22 @@
 import React, { useState } from 'react'
 import { Button, Badge, Toast, ToastHeader, ToastBody, Row, Col, Table } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../redux/cartProduct';
 
-function CartBadge({ cart, addCart, removeCart }) {
+function CartBadge() {
     const [showCart, toggleShowCart] = useState(false)
+    const cart = useSelector(state => state.cart)
     let grandTotal = 0;
+    const dispatch = useDispatch()
+
+    const addProduct = (p) => {
+        dispatch(addToCart(p))
+    }
+    const removeProduct = (id) => {
+        dispatch(removeFromCart(id))
+    }
     return (
-        <div>
+        <div className='mt-5'>
             <Button
                 color="info"
                 // outline
@@ -59,9 +70,9 @@ function CartBadge({ cart, addCart, removeCart }) {
                                                     {product?.title ?? ''}
                                                 </td>
                                                 <td>
-                                                    <i onClick={() => removeCart(product)} className="fa fa-minus-circle text-info fs-6 cur-point" aria-hidden="true"></i>
+                                                    <i onClick={() => removeProduct(product.id)} className="fa fa-minus-circle text-info fs-6 cur-point" aria-hidden="true"></i>
                                                     {`  `}{product?.cartQty ?? 0}{`  `}
-                                                    <i onClick={() => addCart(product)} className="fa fa-plus-circle text-info fs-6 cur-point" aria-hidden="true"></i>
+                                                    <i onClick={() => addProduct(product)} className="fa fa-plus-circle text-info fs-6 cur-point" aria-hidden="true"></i>
                                                 </td>
                                                 <td className=''>
                                                     {product?.price.toFixed(2) ?? ''}

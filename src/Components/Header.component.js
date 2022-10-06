@@ -5,16 +5,12 @@ import CartBadge from './CartBadge.component';
 
 function Header() {
     return (
-        <Row>
-            <Col sm={12}>
-                <div className='justify-content-between'>
-                    <Col sm={2}>
-                        <img src={logo} alt='logo' height={'100'} width={'150'} />
-                    </Col>
-                    <Col sm={2} className={'text-end'}>
-                        {/* <CartBadge cart={cart} addCart={(p) => addToCart(p)} removeCart={(p) => removeFromCart(p)} /> */}
-                    </Col>
-                </div>
+        <Row className='justify-content-between'>
+            <Col sm={2}>
+                <img src={logo} alt='logo' height={'100'} width={'150'} />
+            </Col>
+            <Col sm={2} className={'text-end'}>
+                <CartBadge />
             </Col>
         </Row>
     )

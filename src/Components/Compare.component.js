@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Badge, Toast, ToastHeader, ToastBody, Row, Col, Table } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeFromCompare } from '../redux/cartProduct';
 
 function Rating({ rate }) {
     let rating = [0, 0, 0, 0, 0];
@@ -15,8 +17,13 @@ function Rating({ rate }) {
     )
 }
 const MemoizeRating = React.memo(Rating);
-function Compare({ compare, removeCompare }) {
+function Compare() {
     const [showCart, toggleShowCart] = useState(false)
+    const compare = useSelector(state => state.compare)
+    const dispatch = useDispatch()
+    const removeCompare = (id) => {
+        dispatch(removeFromCompare(id))
+    }
     return (
         <div>
             <Button

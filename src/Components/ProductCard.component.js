@@ -1,7 +1,18 @@
 import React from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
+import { useDispatch } from 'react-redux';
+import { addToCart, addToCompare } from '../redux/cartProduct';
 
-function ProductCard({ product, addCart, addCompare }) {
+
+function ProductCard({ product }) {
+    const dispatch = useDispatch()
+
+    const addCart = () => {
+        dispatch(addToCart(product))
+    }
+    const addCompare = () => {
+        dispatch(addToCompare(product))
+    }
     return (
         <Card className='product-card'>
             <img

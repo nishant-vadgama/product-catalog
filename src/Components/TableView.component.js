@@ -1,7 +1,17 @@
 import React from 'react'
 import { Col, Row, Table, Button } from 'reactstrap';
+import { useDispatch } from 'react-redux';
+import { addToCart, addToCompare } from '../redux/cartProduct';
 
-export default function TableView({ products, addCart, addCompare }) {
+export default function TableView({ products }) {
+    const dispatch = useDispatch()
+
+    const addProduct = (p) => {
+        dispatch(addToCart(p))
+    }
+    const addCompare = (p) => {
+        dispatch(addToCompare(p))
+    }
     return (
         <div className='table-view'>
             <Row>
@@ -45,7 +55,7 @@ export default function TableView({ products, addCart, addCompare }) {
                                             {product?.description ?? ''}
                                         </td>
                                         <td className=''>
-                                            <Button className='mb-1' onClick={() => addCart(product)}>
+                                            <Button className='mb-1' onClick={() => addProduct(product)}>
                                                 Add to Cart
                                             </Button>
                                             <Button outline size="sm" onClick={() => addCompare(product)}>
